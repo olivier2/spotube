@@ -7,6 +7,11 @@
 #define MyAppURL "https://github.com/KRTirtho/spotube"
 #define MyAppExeName "spotube.exe"
 
+; https://github.com/DomGries/InnoDependencyInstaller
+; requires netcorecheck.exe and netcorecheck_x64.exe (see CodeDependencies.iss)
+#define public Dependency_Path_NetCoreCheck ".\"
+#include "CodeDependencies.iss"
+
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
@@ -57,3 +62,9 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
+[Code]
+function InitializeSetup: Boolean;
+begin
+  Dependency_AddVC2015To2022;
+  Result := True;
+end;
