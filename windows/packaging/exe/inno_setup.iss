@@ -1,7 +1,7 @@
 ; https://github.com/DomGries/InnoDependencyInstaller
 ; requires netcorecheck.exe and netcorecheck_x64.exe (see CodeDependencies.iss)
-#define public Dependency_Path_NetCoreCheck "..\..\..\build\inno-depend\dependencies\"
-#include "..\..\..\build\inno-depend\CodeDependencies.iss"
+#define public Dependency_Path_NetCoreCheck "..\..\build\inno-depend\dependencies\"
+#include "..\..\build\inno-depend\CodeDependencies.iss"
 
 [Setup]
 AppId={{APP_ID}}
