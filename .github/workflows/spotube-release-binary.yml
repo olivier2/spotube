@@ -278,7 +278,7 @@ jobs:
         if: inputs.android_debug
         run: |
           flutter build apk --flavor ${{ inputs.channel }} --debug
-          mv build/app/outputs/apk/${{ inputs.channel }}/app-${{ inputs.channel }}-debug.apk build/Spotube-android-all-arch.apk
+          mv build/app/outputs/flutter-apk/app-${{ inputs.channel }}-debug.apk build/Spotube-android-all-arch.apk
           touch build/Spotube-playstore-all-arch.aab
 
       - name: Build Playstore AppBundle
