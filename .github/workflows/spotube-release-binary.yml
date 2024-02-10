@@ -24,12 +24,32 @@ on:
         required: true
         type: boolean
         default: true
-
+      windows:
+        description: Windows Build
+        type: boolean
+        default: true
+      android:
+        description: Android Build
+        type: boolean
+        default: true
+      linux:
+        description: Linux Build
+        type: boolean
+        default: true
+      macos:
+        description: Mac Build
+        type: boolean
+        default: true
+      ios:
+        description: iOS Build
+        type: boolean
+        default: true
 env:
   FLUTTER_VERSION: '3.16.3'
 
 jobs:
   windows:
+    if: inputs.windows
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -104,6 +124,7 @@ jobs:
           limit-access-to-actor: true
 
   linux:
+    if: inputs.linux
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -197,6 +218,7 @@ jobs:
 
 
   android:
+    if: inputs.android
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -272,7 +294,7 @@ jobs:
           limit-access-to-actor: true
 
   macos:
-
+    if: inputs.macos
     runs-on: macos-12
     steps:
       - uses: actions/checkout@v4
@@ -338,6 +360,7 @@ jobs:
           limit-access-to-actor: true
 
   iOS:
+    if: inputs.ios
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
