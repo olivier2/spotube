@@ -32,6 +32,10 @@ on:
         description: Android Build
         type: boolean
         default: true
+      android_debug:
+        description: Android Debug (not release)
+        type: boolean
+        default: false
       linux:
         description: Linux Build
         type: boolean
@@ -259,16 +263,26 @@ jobs:
           dart run build_runner build --delete-conflicting-outputs --enable-experiment=records,patterns
 
       - name: Sign Apk
+        if: ${{ ! inputs.android_debug }}
         run: |
           echo '${{ secrets.KEYSTORE }}' | base64 --decode > android/app/upload-keystore.jks
           echo '${{ secrets.KEY_PROPERTIES }}' > android/key.properties
 
       - name: Build Apk
+        if: ${{ ! inputs.android_debug }}
         run: |
           flutter build apk --flavor ${{ inputs.channel }}          
           mv build/app/outputs/flutter-apk/app-${{ inputs.channel }}-release.apk build/Spotube-android-all-arch.apk
 
+      - name: Build Apk Debug
+        if: inputs.android_debug
+        run: |
+          flutter build apk --flavor ${{ inputs.channel }} --debug
+          mv build/app/outputs/apk/${{ inputs.channel }}/app-${{ inputs.channel }}-debug.apk build/Spotube-android-all-arch.apk
+          touch build/Spotube-playstore-all-arch.aab
+
       - name: Build Playstore AppBundle
+        if: ${{ ! inputs.android_debug }}
         run: |
           echo 'ENABLE_UPDATE_CHECK=0' >> .env
           dart run build_runner build --delete-conflicting-outputs --enable-experiment=records,patterns
