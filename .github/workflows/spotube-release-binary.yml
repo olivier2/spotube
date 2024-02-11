@@ -437,6 +437,10 @@ jobs:
       - android
       - macos
       - iOS
+    if: |  # https://stackoverflow.com/questions/66343052/github-actions-or-operator-for-needs-clause
+      always()
+      && contains(needs.*.result, 'success')
+      && !contains(needs.*.result, 'failure') 
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -446,6 +450,12 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get install tree -y
 
+      - name: Get branch info
+        shell: bash
+        run: | # https://stackoverflow.com/a/61699863
+          echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+          echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> "$GITHUB_ENV"
+      
       - name: Generate Checksums
         run: |
           tree .
@@ -466,7 +476,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: v${{ inputs.version }} # mind the "v" prefix
+          tag: "${{ env.branch }}-${{ env.sha_short }}" # mind the "v" prefix
           omitBodyDuringUpdate: true
           omitNameDuringUpdate: true
           omitPrereleaseDuringUpdate: true
