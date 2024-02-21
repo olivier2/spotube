@@ -8,6 +8,7 @@ import 'package:spotube/extensions/context.dart';
 import 'package:spotube/pages/settings/sections/about.dart';
 import 'package:spotube/pages/settings/sections/accounts.dart';
 import 'package:spotube/pages/settings/sections/appearance.dart';
+import 'package:spotube/pages/settings/sections/proxy.dart';
 import 'package:spotube/pages/settings/sections/desktop.dart';
 import 'package:spotube/pages/settings/sections/developers.dart';
 import 'package:spotube/pages/settings/sections/downloads.dart';
@@ -44,6 +45,7 @@ class SettingsPage extends HookConsumerWidget {
                     const SettingsLanguageRegionSection(),
                     const SettingsAppearanceSection(),
                     const SettingsPlaybackSection(),
+                    SettingsProxySection(),
                     const SettingsDownloadsSection(),
                     if (DesktopTools.platform.isDesktop)
                       const SettingsDesktopSection(),

@@ -171,6 +171,9 @@ final class UserPreferences {
   @JsonKey(defaultValue: "")
   final String downloadLocation;
 
+  @JsonKey(defaultValue: "DIRECT")
+  final String socksProxy;
+
   @JsonKey(defaultValue: "https://pipedapi.kavin.rocks")
   final String pipedInstance;
 
@@ -217,6 +220,7 @@ final class UserPreferences {
     required this.recommendationMarket,
     required this.searchMode,
     required this.downloadLocation,
+    required this.socksProxy,
     required this.pipedInstance,
     required this.themeMode,
     required this.audioSource,
@@ -244,6 +248,7 @@ final class UserPreferences {
     bool? checkUpdate,
     SourceQualities? audioQuality,
     String? downloadLocation,
+    String? socksProxy,
     LayoutMode? layoutMode,
     CloseBehavior? closeBehavior,
     bool? showSystemTrayIcon,
@@ -268,6 +273,7 @@ final class UserPreferences {
       checkUpdate: checkUpdate ?? this.checkUpdate,
       audioQuality: audioQuality ?? this.audioQuality,
       downloadLocation: downloadLocation ?? this.downloadLocation,
+      socksProxy: socksProxy ?? this.socksProxy,
       layoutMode: layoutMode ?? this.layoutMode,
       closeBehavior: closeBehavior ?? this.closeBehavior,
       showSystemTrayIcon: showSystemTrayIcon ?? this.showSystemTrayIcon,

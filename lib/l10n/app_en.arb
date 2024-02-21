@@ -139,6 +139,8 @@
   "blacklist_description": "Blacklisted tracks and artists",
   "wait_for_download_to_finish": "Please wait for the current download to finish",
   "desktop": "Desktop",
+  "proxy": "Proxy",
+  "proxyValidationHelp": "Invalid, try the following format (where username:password@ is optional): ",
   "close_behavior": "Close Behavior",
   "close": "Close",
   "minimize_to_tray": "Minimize to tray",

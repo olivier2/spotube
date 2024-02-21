@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_desktop_tools/flutter_desktop_tools.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_socks_proxy/socks_proxy.dart';
 import 'package:spotify/spotify.dart';
 import 'package:spotube/components/settings/color_scheme_picker_dialog.dart';
 import 'package:spotube/provider/palette_provider.dart';
@@ -67,6 +68,17 @@ class UserPreferencesNotifier extends PersistedStateNotifier<UserPreferences> {
   void setDownloadLocation(String downloadDir) {
     if (downloadDir.isEmpty) return;
     state = state.copyWith(downloadLocation: downloadDir);
+  }
+
+  String getSocksProxy() {
+    return state.socksProxy.isEmpty || state.socksProxy == "DIRECT"
+        ? ""
+        : state.socksProxy;
+  }
+
+  void setSocksProxy(String socksProxyString) {
+    SocksProxy.setProxy(socksProxyString.isEmpty ? "DIRECT" : socksProxyString);
+    state = state.copyWith(socksProxy: socksProxyString);
   }
 
   void setLayoutMode(LayoutMode mode) {
@@ -142,6 +154,10 @@ class UserPreferencesNotifier extends PersistedStateNotifier<UserPreferences> {
         downloadLocation: await _getDefaultDownloadDirectory(),
       );
     }
+
+    // always initialize to DIRECT and then use setSocksProxy logic with saved settings
+    SocksProxy.initProxy(proxy: "DIRECT");
+    setSocksProxy(state.socksProxy);
 
     if (DesktopTools.platform.isDesktop) {
       await DesktopTools.window.setTitleBarStyle(
